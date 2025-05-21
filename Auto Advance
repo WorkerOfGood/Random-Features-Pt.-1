@@ -1,0 +1,29 @@
+function autoadvance() {
+	setTimeout(() => {
+		try {
+			API.FrameChain.nextFrame();
+		} catch (error) { }
+	}, Math.floor(Math.random() * 5000));
+}
+
+#OR
+
+    function auto_advance() {
+        if (!is_checked('auto_advance_tickbox')) {
+            return
+        }
+            var activity_title = document.getElementById("activity-title").innerText;
+            if (activity_title !== "Quiz") {
+                try {
+                    document.querySelector('.footnav.goRight').click();
+                } catch (TypeError) {}
+                try {
+                    window.frames[0].API.FrameChain.nextFrame();
+                } catch (TypeError) {}
+                
+                var frame_right_links = document.querySelectorAll('li.FrameRight a');
+                frame_right_links.forEach(function(link) {
+                    link.click();
+                });
+            }
+    }
