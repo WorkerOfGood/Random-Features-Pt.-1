@@ -1,0 +1,60 @@
+    function vocab_completer() {
+        if (is_checked('vocab_completer_tickbox') && document.getElementById('activity-title').innerText === 'Vocabulary') {
+            try {
+                window.frames[0].document.getElementsByClassName('word-textbox')[0].value = window.frames[0].document.getElementsByClassName('word-background')[0].innerText;
+                for (const button of window.frames[0].document.getElementsByClassName('playbutton vocab-play')) {
+                    button.click();
+                }
+                click('.uibtn.uibtn-blue.uibtn-arrow-next', window.frames[0].document);
+            } catch (e) {}
+        }
+    }
+
+#OR
+
+function autoVocabLoop() {
+    var activityTitleElement = document.getElementById('activity-title')
+    if (
+      activityTitleElement &&
+      activityTitleElement.innerText === 'Vocabulary'
+    ) {
+      vocabFiller()
+    }
+    setTimeout(autoVocabLoop, settings.vocabFillerSpeed)
+  }
+  function vocabFiller() {
+    var activityTitleElement = document.getElementById('activity-title')
+    if (activityTitleElement.textContent === 'Vocabulary') {
+      var stageFrame = document.querySelector('#stageFrame').contentDocument
+      var wordBackground = stageFrame.querySelector('.word-background')
+      var wordTextbox = stageFrame.querySelector('.word-textbox')
+      var nextButton = stageFrame.querySelector(
+        '.uibtn.uibtn-blue.uibtn-arrow-next'
+      )
+      if (nextButton) {
+        var txt = wordBackground.value
+        wordTextbox.value = txt
+        var event = new Event('keyup')
+        wordTextbox.dispatchEvent(event)
+        nextButton.click()
+        setTimeout(function () {
+          if (wordBackground && wordTextbox) {
+            var txt = wordBackground.value
+            wordTextbox.value = txt
+            var event = new Event('keyup')
+            wordTextbox.dispatchEvent(event)
+            setTimeout(function () {
+              var playButtons = stageFrame.querySelectorAll(
+                '.playbutton.vocab-play'
+              )
+              if (playButtons.length > 0) {
+                playButtons[0].click()
+                playButtons[1].click()
+              }
+              nextButton.click()
+            }, settings.vocabFillerSpeed)
+          }
+        })
+      }
+    }
+  }
