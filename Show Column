@@ -1,0 +1,18 @@
+  function showColumns() {
+    var iframes = document.querySelectorAll('iframe')
+    for (var i = 0; i < iframes.length; i++) {
+      var innerIframes = iframes[i].contentDocument.querySelectorAll('iframe')
+      for (var j = 0; j < innerIframes.length; j++) {
+        var rightColumn =
+          innerIframes[j].contentDocument.querySelector('.right-column')
+        var leftColumn =
+          innerIframes[j].contentDocument.querySelector('.left-column')
+        if (rightColumn) {
+          rightColumn.children[0].removeAttribute('style')
+        }
+        if (leftColumn) {
+          leftColumn.children[0].removeAttribute('style')
+        }
+      }
+    }
+  }
