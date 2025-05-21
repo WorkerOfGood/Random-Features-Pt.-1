@@ -1,0 +1,5 @@
+function skipIntro() {
+	try {
+		window.frames[0].document.getElementById("invis-o-div").remove();
+	} catch (TypeError) { }
+}
